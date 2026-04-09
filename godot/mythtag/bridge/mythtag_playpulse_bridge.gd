@@ -21,6 +21,7 @@ func _ready() -> void:
 	if _is_console_smoke_enabled():
 		call_deferred("_run_console_smoke")
 
+
 func _configure_playpulse() -> void:
 	var game_version := str(ProjectSettings.get_setting("application/config/version", ""))
 	if game_version.strip_edges() == "":
@@ -45,11 +46,6 @@ func _configure_playpulse() -> void:
 	if configure_result != OK:
 		push_warning("PlayPulse configure failed with code %s" % configure_result)
 		return
-
-	print(
-		"PlayPulse configured for MythTag with build_id=%s ingest_base_url=%s"
-		% [build_id, _ingest_base_url()]
-	)
 
 
 func _connect_team_selection() -> void:
@@ -244,7 +240,6 @@ func _track_or_warn(event_name: String, props: Dictionary) -> void:
 		push_warning("PlayPulse track failed for %s with code %s" % [event_name, track_result])
 		return
 
-	print("PlayPulse tracked %s" % event_name)
 	var flush_result := PlayPulse.flush(true)
 	if flush_result not in [OK, ERR_BUSY]:
 		push_warning("PlayPulse flush failed after %s with code %s" % [event_name, flush_result])

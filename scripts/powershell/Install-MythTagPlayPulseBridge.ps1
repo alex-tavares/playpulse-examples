@@ -1,7 +1,7 @@
 param(
     [string]$MythTagPath = "C:\Users\alex1\GameDev\MythTag",
     [string]$PlayPulseRepoPath = (Join-Path $PSScriptRoot "..\\..\\..\\playpulse"),
-    [string]$BridgeSourcePath = (Join-Path $PSScriptRoot "..\\..\\sdk\\godot\\mythtag\\mythtag_playpulse_bridge.gd")
+    [string]$BridgeSourcePath = (Join-Path $PSScriptRoot "..\\..\\godot\\mythtag\\bridge\\mythtag_playpulse_bridge.gd")
 )
 
 $ErrorActionPreference = "Stop"

@@ -1,0 +1,11 @@
+; Engine configuration file.
+; Example consumer project for PlayPulse.
+
+config_version=5
+
+[application]
+config/name="PlayPulse Sample Project"
+run/main_scene=""
+
+[autoload]
+PlayPulseSample="*res://autoload/playpulse_sample.gd"
