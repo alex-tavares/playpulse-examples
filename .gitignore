@@ -1,3 +1,5 @@
 *.log
 .env
 .env.*
+godot/**/addons/playpulse/
+godot/**/Addons/playpulse/

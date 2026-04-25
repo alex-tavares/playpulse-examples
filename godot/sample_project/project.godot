@@ -8,4 +8,5 @@ config/name="PlayPulse Sample Project"
 run/main_scene=""
 
 [autoload]
+PlayPulse="*res://addons/playpulse/playpulse.gd"
 PlayPulseSample="*res://autoload/playpulse_sample.gd"

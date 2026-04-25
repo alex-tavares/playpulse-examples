@@ -12,7 +12,7 @@ func _ready() -> void:
 	var configure_result := playpulse.configure({
 		"api_key": OS.get_environment("PLAYPULSE_SAMPLE_API_KEY"),
 		"signing_secret": OS.get_environment("PLAYPULSE_SAMPLE_SIGNING_SECRET"),
-		"game_id": _env_or_default("PLAYPULSE_SAMPLE_GAME_ID", "sample-game"),
+		"game_id": _env_or_default("PLAYPULSE_SAMPLE_GAME_ID", "mythtag"),
 		"game_version": _env_or_default("PLAYPULSE_SAMPLE_GAME_VERSION", "0.1.0"),
 		"build_id": _env_or_default("PLAYPULSE_SAMPLE_BUILD_ID", "sample-local"),
 		"ingest_base_url": _env_or_default("PLAYPULSE_SAMPLE_INGEST_BASE_URL", "http://127.0.0.1:4001"),
@@ -26,10 +26,16 @@ func _ready() -> void:
 		return
 
 	_configured = true
-	playpulse.track("session_start", {
-		"launch_reason": "sample_project",
+	_track_or_warn(playpulse, "session_start", {
+		"launch_reason": "fresh_launch",
 		"connection_mode": "online",
 		"timezone_offset_min": Time.get_time_zone_from_system().get("bias", 0),
+	})
+	_track_or_warn(playpulse, "level_end", {
+		"level_id": "sample_level",
+		"completed": true,
+		"duration_s": 30,
+		"reward_ids": ["coin"],
 	})
 	playpulse.flush(true)
 
@@ -47,3 +53,9 @@ func _env_or_default(key: String, fallback: String) -> String:
 		return fallback
 
 	return value
+
+
+func _track_or_warn(playpulse: Node, event_name: String, props: Dictionary) -> void:
+	var track_result: int = playpulse.track(event_name, props)
+	if track_result != OK:
+		push_warning("PlayPulse track failed for %s with code %s" % [event_name, track_result])
